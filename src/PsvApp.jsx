@@ -86,7 +86,7 @@ export const PsvApp = () => {
   const [markersState, setMarkersState] = useState({})
   const [panelOpen, setPanelOpen] = useState(false)
   const [markerFocus, setMarkerFocus] = useState()
-
+  console.log('markersState', markersState)
   useEffect(() => {
     if (viewerContainerRef.current && !psv) {
       callOnce(() => {
@@ -235,12 +235,13 @@ const MarkerPanel = ({ psv, markersInstance, markersState = {} }) => {
 }
 
 const MarkerItem = ({ marker, handleToggleEntryComplete, gotoMarker }) => {
+  if (!marker) return null
   return (
     <div className='w-full flex flex-col space-x-2 even:bg-blend-darken'>
       <span 
         onClick={() => gotoMarker(marker.id, 500)}
       >
-        {marker.data.label.length > 0 ? marker.data.label : `ID: ${marker.id.slice(0,6)}...`}
+        {marker.data.label?.length > 0 ? marker.data.label : `ID: ${marker.id.slice(0,6)}...`}
       </span>
       <div className='space-x-2'>
         <input type='checkbox' checked={marker.data.dataEntryComplete} onChange={() => handleToggleEntryComplete(marker)} />
